@@ -62,6 +62,45 @@ precedence over `.env`, so you can still override per-run:
 $env:LLM_API_KEY="..."; node src/cli.js test.md es
 ```
 
+## Example
+
+Both blocks below are real fragments of [`test.md`](test.md) and its translation
+[`test.es.md`](test.es.md). The heading, paragraph and link text are translated
+into Spanish, while the link URL, the `inlineCode`, and the entire fenced code
+block stay byte-for-byte identical.
+
+**Before** (`test.md`):
+
+````markdown
+# Hello World
+
+This is an ordinary paragraph with some `inlineCode` and a [link to the Node.js docs](https://nodejs.org/en/docs).
+
+Here is a fenced code block that must stay byte-for-byte identical:
+
+```js
+function greet(name) {
+  return `Hello, ${name}!`;
+}
+```
+````
+
+**After** (`test.es.md`):
+
+````markdown
+# Hola Mundo
+
+Esto es un párrafo ordinario con algo `inlineCode` y un [enlace a la documentación de Node.js](https://nodejs.org/en/docs).
+
+Aquí está un bloque de código cercado que debe permanecer idéntico byte a byte:
+
+```js
+function greet(name) {
+  return `Hello, ${name}!`;
+}
+```
+````
+
 ## Verify markup preservation
 
 Re-parses both files and compares their ASTs, ignoring only the text values —

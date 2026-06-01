@@ -69,7 +69,7 @@ Both blocks below are real fragments of [`test.md`](test.md) and its translation
 into Spanish, while the link URL, the `inlineCode`, and the entire fenced code
 block stay byte-for-byte identical.
 
-**Before** (`test.md`):
+**Before** — the original input `test.md` (English):
 
 ````markdown
 # Hello World
@@ -85,7 +85,8 @@ function greet(name) {
 ```
 ````
 
-**After** (`test.es.md`):
+**After** — the program's output `test.es.md`, translated to Spanish (`es`).
+The Spanish below is the *result* of running the tool, not project documentation:
 
 ````markdown
 # Hola Mundo

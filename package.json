@@ -1,0 +1,23 @@
+{
+  "name": "md-translator",
+  "version": "0.1.0",
+  "description": "CLI that translates only the human-readable text of a Markdown file, preserving all markup.",
+  "type": "module",
+  "bin": {
+    "md-translator": "src/cli.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node src/cli.js",
+    "test:dry": "node src/cli.js --dry-run test.md es",
+    "verify": "node scripts/verify.js"
+  },
+  "dependencies": {
+    "remark-frontmatter": "^5.0.0",
+    "remark-parse": "^11.0.0",
+    "remark-stringify": "^11.0.0",
+    "unified": "^11.0.5"
+  }
+}

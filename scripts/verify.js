@@ -1,17 +1,17 @@
-// Проверка сохранности разметки: всё, кроме значений text-узлов, должно совпадать
-// между двумя Markdown-файлами. Заново парсим оба и сравниваем нормализованные AST,
-// игнорируя только значения `text` (человекочитаемый текст вправе меняться).
+// Markup-preservation check: everything except text-node values must match
+// between two Markdown files. We re-parse both and compare normalized ASTs,
+// ignoring only `text` values (human-readable text is allowed to change).
 //
 // Usage: node scripts/verify.js <original.md> <translated.md>
 import { readFile } from 'node:fs/promises';
 import { parse } from '../src/markdown.js';
 
-// Значимые для разметки поля узлов (code/inlineCode/html/yaml несут `value` —
-// его сравниваем, чтобы поймать любое изменение кода/фронтматтера/HTML).
+// Markup-significant node fields (code/inlineCode/html/yaml carry `value` — we
+// compare it to catch any change to code/frontmatter/HTML).
 const KEYS = ['type', 'value', 'lang', 'meta', 'url', 'title', 'alt', 'depth', 'ordered', 'identifier', 'label'];
 
 function normalize(node) {
-  if (node.type === 'text') return { type: 'text' }; // значение игнорируем
+  if (node.type === 'text') return { type: 'text' }; // ignore the value
   const out = {};
   for (const key of KEYS) {
     if (key in node) out[key] = node[key];

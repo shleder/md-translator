@@ -1,12 +1,12 @@
-// Рекурсивно собирает все узлы типа `text` из mdast-дерева.
+// Recursively collects every `text` node from an mdast tree.
 //
-// Почему этого достаточно для защиты разметки: в mdast `code` (блок),
-// `inlineCode`, `html` и `yaml` (фронтматтер) — это ОТДЕЛЬНЫЕ типы узлов, а не
-// `text`. URL/цель ссылки и путь картинки лежат в полях `url`/`src` узлов
-// `link`/`image`, а не в дочерних `text`. Поэтому, переводя только `text`-узлы,
-// мы автоматически не трогаем код, ссылки-цели, картинки, HTML и фронтматтер.
-// Видимый текст ссылки (label) — это `text`-узел внутри `link`, поэтому он
-// переводится (по согласованному решению).
+// Why this is enough to protect markup: in mdast, `code` (block), `inlineCode`,
+// `html` and `yaml` (frontmatter) are SEPARATE node types, not `text`. A link's
+// URL/target and an image's path live in the `url`/`src` fields of `link`/`image`
+// nodes, not in child `text` nodes. So by translating only `text` nodes we
+// automatically leave code, link targets, images, HTML and frontmatter untouched.
+// A link's visible label is a `text` node inside `link`, so it does get translated
+// (per the agreed decision).
 export function collectTextNodes(tree) {
   const nodes = [];
   const visit = (node) => {

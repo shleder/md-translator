@@ -5,13 +5,13 @@ import { parse, stringify } from './markdown.js';
 import { translateTree } from './translate.js';
 import { createTranslator } from './llm.js';
 
-// Подхватываем .env из текущей рабочей директории, если он есть. Используем
-// нативный Node API (без зависимости dotenv); существующие переменные окружения
-// имеют приоритет и не перезаписываются. На старом Node или без файла — тихо пропускаем.
+// Load .env from the current working directory if present. Uses the native Node
+// API (no dotenv dependency); variables already set in the environment take
+// precedence and are not overwritten. On older Node or with no file, silently skip.
 try {
   process.loadEnvFile?.('.env');
 } catch {
-  // .env отсутствует или Node его не поддерживает — это не ошибка.
+  // .env is missing or Node does not support it — not an error.
 }
 
 const USAGE = `Usage: md-translator [--dry-run] <input.md> <target-lang> [output.md]
@@ -41,7 +41,7 @@ function parseArgs(argv) {
   return { input, lang, output, dryRun };
 }
 
-// test.md + "es" -> test.es.md (рядом с входным файлом)
+// test.md + "es" -> test.es.md (next to the input file)
 function defaultOutput(input, lang) {
   const ext = extname(input);
   const base = basename(input, ext);

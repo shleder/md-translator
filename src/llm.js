@@ -1,21 +1,21 @@
-// Переводчик текстовых сегментов: OpenAI-совместимый HTTP-клиент на нативном
-// `fetch` (Node >= 18) плюс детерминированный мок для `--dry-run`.
+// Translates text segments: an OpenAI-compatible HTTP client on the native
+// `fetch` (Node >= 18) plus a deterministic mock for `--dry-run`.
 //
-// Провайдер задаётся через переменные окружения — ключ НЕ хардкодится:
-//   LLM_API_KEY  — ключ (обязателен в реальном режиме)
-//   LLM_BASE_URL — база OpenAI-совместимого API, напр. https://api.openai.com/v1
-//   LLM_MODEL    — имя модели (опционально)
+// The provider is configured via environment variables — the key is NOT hard-coded:
+//   LLM_API_KEY  — key (required in real mode)
+//   LLM_BASE_URL — OpenAI-compatible API base, e.g. https://api.openai.com/v1
+//   LLM_MODEL    — model name (optional)
 
 const systemPrompt = (lang) =>
   `You are a translation engine. Translate the user's text into ${lang}. ` +
   `Return ONLY the translated text — no quotes, no comments, no explanations. ` +
   `Preserve meaning, tone and punctuation. Do not add or remove content.`;
 
-// Возвращает async-функцию translate(text, lang) -> string.
+// Returns an async function translate(text, lang) -> string.
 export function createTranslator({ dryRun = false } = {}) {
   if (dryRun) {
-    // Мок не обращается к сети и не меняет разметку — только оборачивает текст,
-    // чтобы можно было проверить сохранность структуры без живого ключа.
+    // The mock does not hit the network and does not change markup — it only wraps
+    // the text, so structure preservation can be checked without a live key.
     return async (text, lang) => `[${lang}] ${text}`;
   }
 

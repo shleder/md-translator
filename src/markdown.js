@@ -3,9 +3,9 @@ import remarkParse from 'remark-parse';
 import remarkStringify from 'remark-stringify';
 import remarkFrontmatter from 'remark-frontmatter';
 
-// Опции сериализации подобраны так, чтобы держаться ближе к обычному стилю входа
-// и минимизировать нормализацию неизменённой разметки. Блоки кода и YAML-фронтматтер
-// remark сохраняет дословно независимо от этих опций.
+// Serialization options are chosen to stay close to a typical input style and
+// minimize normalization of untouched markup. Code blocks and YAML frontmatter
+// are preserved verbatim by remark regardless of these options.
 const STRINGIFY_OPTIONS = {
   bullet: '-',
   emphasis: '_',
@@ -24,12 +24,12 @@ const stringifier = unified()
   .use(remarkStringify, STRINGIFY_OPTIONS)
   .use(remarkFrontmatter, ['yaml']);
 
-// Markdown-строка -> mdast. Фронтматтер становится отдельным `yaml`-узлом.
+// Markdown string -> mdast. Frontmatter becomes a separate `yaml` node.
 export function parse(text) {
   return parser.parse(text);
 }
 
-// mdast -> Markdown-строка.
+// mdast -> Markdown string.
 export function stringify(tree) {
   return stringifier.stringify(tree);
 }
